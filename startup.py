@@ -41,6 +41,16 @@ class Startup:
             for i in range(3, 0, -1):
                 print(i)
                 time.sleep(1)
+
+            # Check if Chrome is already running
+            if not self.is_app_running("chrome.exe"):
+                # Path to Chrome's executable; change it according to your installation
+                chrome_path = "C:/Program Files/Google/Chrome/Application/chrome.exe"
+                try:
+                    os.startfile(chrome_path)
+                except OSError:
+                    print("Failed to open Google Chrome")
+
             try:
                 with open("I:/CodeProjects/Python/Startup/app_list.txt", "r") as file:
                     apps = file.readlines()
@@ -50,13 +60,11 @@ class Startup:
 
             for app in apps:
                 app = app.strip()
-                if 'google' not in app.lower() and not self.is_app_running(app):  # Check if the app is running
+                if not self.is_app_running(app):  # Check if the app is running
                     try:
                         os.startfile(app)
                     except OSError:
                         print(f"Failed to open {app}")
-                else:
-                    print(f"{app} is already running or is a Google application.")
 
 if __name__ == "__main__":
     Startup()
